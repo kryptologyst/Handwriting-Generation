@@ -1,0 +1,36 @@
+# GAN model configuration
+_target_: src.models.gan.HandwritingGAN
+
+# Generator architecture
+generator:
+  latent_dim: 100
+  text_embedding_dim: 256
+  hidden_dims: [512, 256, 128]
+  output_channels: 1
+  use_spectral_norm: true
+  use_self_attention: true
+
+# Discriminator architecture
+discriminator:
+  input_channels: 1
+  text_embedding_dim: 256
+  hidden_dims: [128, 256, 512]
+  use_spectral_norm: true
+  use_self_attention: true
+
+# Loss configuration
+loss:
+  generator_loss: "hinge"  # hinge, ns, wgan
+  discriminator_loss: "hinge"
+  lambda_gp: 10.0  # gradient penalty weight
+  lambda_feature: 10.0  # feature matching weight
+
+# Training specific
+lr_g: 0.0002
+lr_d: 0.0002
+beta1: 0.5
+beta2: 0.999
+weight_decay: 0.0
+d_steps_per_g_step: 1
+use_ema: true
+ema_decay: 0.999

@@ -1,0 +1,35 @@
+# Diffusion model configuration
+_target_: src.models.diffusion.HandwritingDiffusion
+
+# UNet architecture
+unet:
+  in_channels: 1
+  out_channels: 1
+  model_channels: 128
+  attention_resolutions: [16, 8]
+  num_res_blocks: 2
+  channel_mult: [1, 2, 4, 4]
+  num_heads: 4
+  use_scale_shift_norm: true
+  resblock_updown: true
+  use_new_attention_order: true
+
+# Noise schedule
+noise_schedule:
+  num_timesteps: 1000
+  beta_start: 0.0001
+  beta_end: 0.02
+  schedule_type: "linear"  # linear, cosine
+
+# Loss configuration
+loss:
+  loss_type: "mse"  # mse, l1
+  use_ema: true
+  ema_decay: 0.9999
+
+# Training specific
+lr: 0.0001
+beta1: 0.9
+beta2: 0.999
+weight_decay: 0.0
+gradient_clip_val: 1.0
